@@ -85,7 +85,7 @@ function Square(props) {
       const {a, b, c} = calculateWinner(squares);
       this.setState({
         history: history.concat([{
-          squares, movePosition: {x: i - Math.round(i/3) * 3 + 4, y: Math.round(i/3)}
+          squares, movePosition: {x: Math.floor(i/3) + 1, y: i%3 + 1}
         }]),
         xIsNext: !this.state.xIsNext,
         stepNumber: history.length,
@@ -114,10 +114,11 @@ function Square(props) {
       let moves
       let movesHistory
       if (this.state.toggled) {
-        movesHistory = history.reverse();
+        movesHistory = history.slice().reverse();
       } else {
         movesHistory = history.slice();
       }
+
       moves = movesHistory.map((situation, index) => {
         if (this.state.toggled) {
           index = history.length - 1 - index
